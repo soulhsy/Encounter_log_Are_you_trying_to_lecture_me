@@ -25,7 +25,7 @@ let printer = null;
 let ePosDev = new epson.ePOSDevice();
 
 function connectPrinter() {
-  ePosDev.connect("192.168.0.2", 8008, function(data) {
+  ePosDev.connect("192.168.0.2", 19100, function(data) {
     if (data === "OK") {
       ePosDev.createDevice(
         "local_printer",
