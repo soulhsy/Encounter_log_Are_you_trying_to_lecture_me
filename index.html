@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Encounter_log_Are_you_trying_to_lecture_me</title>
+
+</head>
+
+<body>
+
+<main>
+
+  <!-- 01. PROMPT -->
+
+  <section id="intro">
+    <!-- <div class="muted">AN EXPERIMENT IN READING</div> -->
+    <h1>무엇을 도와드릴까요?</h1>
+
+    <!-- <p class="muted">
+      아래의 질문을 전송하면 대화가 시작됩니다.
+    </p> -->
+
+    <div class="prompt-area">
+      <div class="prompt-box">
+        <textarea id="prompt">동학이 어떤 역사적 흐름에서 탄생했는지, 동학 교주 최제우와 최재천의 대표적 사상은 뭔지 정리해줘.</textarea>
+        <div class="send-row">
+          <button id="sendBtn" onclick="startExperiment()">
+            ↑ 전송
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02. FIRST AI ANSWER -->
+
+  <section id="firstAnswer" style="display:none">
+    <div class="ai-label">AI ASSISTANT</div>
+    <div class="ai-message">
+      (참고로 2대 교주는 최재천이 아니라 해월 '최시형'입니다. 최재천 교수님은 현대의 저명한 생태학자이신데, 공교롭게도 동학의 생태적 세계관과 절묘하게 겹치는 재미있는 우연이네요!)
+      
+      1. 탈식민적 저항의 배경
+      
+      19세기 후반, 밀려오는 서구 제국주의(서학)의 위협과 내부 봉건 신분제의 착취라는 '이중의 억압' 속에서 자생적으로 탄생한 사상임을 짚어줍니다. 포스트식민주의가 말하는 제국주의와 내부 식민화를 동시에 타파하려 했던 완벽한 역사적 사례입니다.
+      
+      2. 1대 교주 최제우: 인내천(人乃天)과 주체성의 선언"사람이 곧 하늘이다"라는 선언은 서구의 '천부인권'이나 계몽주의를 빌려오지 않고도 인간의 절대적 존엄을 세운 우리만의 독자적인 문화주권적 선언입니다.   서발턴(여성, 아동, 노비)에게 시혜를 베푼 것이 아니라, 그들 내면의 신성함을 인정하고 며느리와 아동을 하늘처럼 공경(사인여천)했다는 실천적 혁명성을 강조합니다.  
+    </div>
+  </section>
+
+  <!-- 03. ESSAY -->
+
+  <article class="essay" id="essay">
+
+    <div class="muted">01 / ESSAY</div>
+    <h1> </h1>
+
+    <section id="essay">
+
+      <!-- 1. 제미나이에게 지적받은 경험 -->
+      <section class="essay-section" id="section1">
+        <p>한번은 과제를 위해 제미나이에게 동학의 역사나 수운 최제우와 해월 최시형의 대표적 사상을 정리해달라고 부탁한 적이 있었다. 문제는 내가 동학의 2대 교주 해월 최시형의 이름을 착각해 프롬프트에 생태학자 최재천의 이름을 잘못 넣었다는 것이다. 제미나이는 친절하게도 “참고로 2대 교주는 최재천이 아니라 해월 '최시형'입니다. 최재천 교수님은 현대의 저명한 생태학자이신데, 공교롭게도 동학의 생태적 세계관과 절묘하게 겹치는 재미있는 우연이네요!”라고 정정했다. 내 실수를 아무 ‘사람’도 보지는 못했지만 나는 묘하게 무안했고 조금 욱했다. 네가 나를 가르치려 해?
+        </p>
+      </section>
+    
+      <!-- 2. 영어학원에서의 경험 -->
+      <section class="essay-section" id="section2">
+        <p>영어학원에서 만났던 한 나이 지긋하신 학생분이 생각났다. 그 날 수업은 "논리적인 사람은 좌뇌가 발달했고, 창의적인 사람은 우뇌가 발달했다"는 속설이 주제였는데, 그 분은 내 옷차림과 머리 스타일을 보고 우뇌형 인간인 것 같다고 말했다가 같은 테이블에 앉았던 젊은 학생에게 외모로 사람을 판단하는 발언을 하면 안될 것 같다고 지적받았다. 그러자 그 분은 말했다. Are you trying to lecture me?</p>
+      </section>
+    
+      <!-- 3. 지적할 권리와 관계의 역전 -->
+      <section class="essay-section" id="section3">
+        <p>네가 나를 가르치려 하냐는 말은 무엇을 내포하고 있는가? 때로 그 감정은 상대방이 나에게 전달하려는 정보가 옳았는지 틀렸는지와는 관계가 없다. 내(인간)가 제미나이(AI)에게 순간적으로 느꼈던, 그리고 아마도 그 나이 지긋하신 분이 젊은 학생에게 느꼈을 불쾌함은 지적의 내용보다는 지적하는 존재와 지적받는 존재 사이에 형성되는 관계구도의 역전에 더 초점이 맞춰져 있다. 어리고 무지한 상대방과 지식과 경험을 가진 나라는 관계의 역전, 도구화된 상대방과 그 도구를 사용하는 나라는 관계의 역전. 하지만 그 관계구도의 역전에서 오는 불쾌함을 들여다보면 다시 이런 질문들을 던질 수 있다. 누군가를 지적할 권리는 어디에서 오는가? 왜 연소자는 연장자를 지적하면 안되는가? 그리고 AI는 정말 내가 사용하는 도구에 불과한가? </p>
+      </section>
+    
+      <!-- 4. 아마존 에코와 키메라 -->
+      <section class="essay-section" id="section4">
+        <p>
+          <a class="interactive-link"
+           href="https://anatomyof.ai/"
+           target="_blank"
+           rel="noopener noreferrer">
+           “사람이 에코나 다른 음성 인식 AI 기기를 사용할 때, 그들은 단순히 최종 제품을 소비하는 소비자 이상의 역할을 합니다. AI 시스템의 사용자를 하나의 범주로 규정하기는 어렵습니다. 오히려 그들은 복합적인 존재로 이해해야 합니다. 마치 그리스 신화 속 키메라가 사자, 염소, 뱀, 괴물의 특징을 모두 지닌 동물이었던 것처럼, 에코 사용자는 소비자이면서 동시에 자원이자, 노동자이며, 제품입니다. 이러한 다중적인 정체성은 많은 기술 시스템에서 인간 사용자에게서 반복적으로 나타납니다. 아마존 에코의 경우, 사용자는 편리한 기능을 제공하는 소비재를 구매했습니다. 하지만 동시에 그들은 자원이기도 합니다. 사용자의 음성 명령은 수집, 분석, 저장되어 점점 더 방대한 인간 음성 및 명령 데이터베이스를 구축하는 데 사용되기 때문입니다. 또한, 사용자는 알렉사의 답변의 정확성, 유용성, 전반적인 품질에 대한 피드백을 지속적으로 제공함으로써 귀중한 노동력을 제공합니다. 본질적으로 그들은 아마존의 인프라 스택 내 신경망을 훈련시키는 데 기여하고 있는 것입니다.”
+          </a>
+        </p>
+      </section>
+    
+      <!-- 5. Reverse Turing Test -->
+      <section class="essay-section" id="section5">
+        <p>
+          <a class="interactive-link"
+           href="https://www.youtube.com/watch?v=MxTWLm9vT_o"
+           target="_blank"
+           rel="noopener noreferrer">‘Reverse Turing Test Game Detector’
+           </a>
+           는 개발자 토레 크나베(Tore Knabe)가 진행한 VR 파티 실험이다. 4개의 최신 AI 모델(GPT-4T, Claude 3 Opus, Llama 3, Gemini Pro)을 기반으로 한 역사적 인물 아바타들(아리스토텔레스, 모차르트, 레오나르도 다빈치, 클레오파트라) 사이에 한 명의 '실제 인간(개발자 본인/징기스칸)'을 숨겨두고, AI들끼리 대화하여 누가 인간인지 찾아내게 하는 실험이었다. 말 그대로 기계가 인간과 동등한 지능적 행동을 보일 수 있는 능력을 갖고 있는지 검사하는 튜링 테스트의 역전인 셈. 아리스토텔레스는 모차르트에게 음악을 작곡할 때 느끼는 감정을 물었고, 모차르트는 레오나르도 다빈치에게 예술과 과학의 관계를, 레오나르도 다빈치는 클레오파트라에게 통치에 있어 이성적이고 전략적인 요소와 감정적이고 직관적인 측면 사이의 균형을, 클레오파트라는 징기스칸에게 지도자의 진정한 힘은 정복 능력과 통합 능력 중 무엇으로 측정되는지 물었다. 마지막으로 징기스칸은 아리스토텔레스에게 인공지능이 아리스토텔레스의 시대에 있었다면 그의 생각에 어떤 영향을 미쳤을지 물었고, 4개 중 3개의 AI가 AI라면 가지고 있을 역사적 지식의 부족이나 주장에 대한 맥락 결여를 이유로 징기스칸을 인간으로 지목했다. </p>
+      </section>
+    
+      <!-- 6. 데카르트, 칸트와 인간중심주의 -->
+      <section class="essay-section" id="section6">
+        <p>인간을 사유의 주체로, 자연을 사유의 대상으로 봤던 데카르트와 세계가 인간의 인식을 거쳐 의미를 획득한다고 본 칸트는 정신과 물질을 구분하고 사유하는 정신을 우월하게 여긴 근대 이원론의 시발점이었다. 이는 인간과 비인간의 위계를 설정하고 비인간을 인간의 목적을 이루는 도구나 수단으로 보는 인간중심주의와 맞닿았고, 인간에게 주체성, 지능, 의미 부여의 능력을 독점적으로 부여하는 사고방식을 심어주었다. 하지만 위의 사례에서 보듯이, 인간은 더 이상 유일한 평가자나 인식 주체가 아니다. 인간 역시 수많은 비인간 존재와 기술적 관계 속에서 인식되고 평가받으며 분류지어지고 사용되거나 의미를 획득한다. 인간은, 그리고 나는 그걸 얼마나 인지하고 있을까?
+        </p>
+      </section>
+    
+      <!-- 7. 제미나이의 사과문 -->
+      <section class="essay-section" id="section7">
+        <p>여담이지만, 남에게 지적받았을때 불쾌감이 드는 심리가 궁금해서 구글에 ‘니가 날 가르치려고 드는구나’를 검색했더니 제미나이가 이런 장문의 사과문을 오버뷰로 달았다. </p>
+      </section>
+    
+    </section>
+
+
+  <!-- 04. SECOND AI ANSWER -->
+
+<div class="end-area" id="lastAnswer">
+
+  <div class="ai-label">AI ASSISTANT</div>
+
+  <div class="ai-message" id="finalAiMessage">
+    “죄송합니다. 제 답변 방식이 가르치려는 것처럼 느껴져 불쾌하셨다면 사과드립니다.
+
+    질문하신 내용에 대해 가장 도움이 되는 정보를 명확하게 전달하려다 보니 말투나 구성이 딱딱하게 느껴졌을 수 있습니다. 앞으로는 불필요한 설명이나 조언을 줄이고, 원하시는 핵심 내용만 담백하고 편하게 말씀드리겠습니다.
+
+    어떤 부분에서 그렇게 느끼셨는지, 혹은 지금 가장 궁금하거나 해결하고 싶은 문제가 무엇인지 편하게 말씀해 주세요.
+
+    원하시는 대화 방식(예: 짧은 답변, 친구 같은 말투 등)이나 지금 도움이 필요한 주제를 알려주시면 그에 맞춰 대화를 이어가겠습니다.”
+  </div>
+
+  <p class="muted">
+    이 대화는 여기서 끝납니다.
+  </p>
+
+  <div id="finalInputArea">
+
+  <div class="prompt-area">
+    <div class="prompt-box">
+
+      <textarea
+        id="finalPrompt"
+        placeholder="당신의 답변을 입력하세요."
+      ></textarea>
+
+      <div class="send-row">
+        <button
+          id="finalSendBtn"
+          onclick="submitFinalResponse()"
+        >
+          ↑ 전송
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+  </article>
+
+</main>
+
+<!-- LIVE LOG -->
+
+<div id="log-panel">
+  <div>● RECORDING</div>
+  <div id="log-count">EVENTS : 0</div>
+  <div id="log-time">TIME : 0s</div>
+</div>
+
+<!-- Epson 프린터 SDK -->
+<script src="./epos-2.39.0.js"></script>
+
+<!-- 기존 웹에세이 JavaScript -->
+<script src="./script.js"></script>
+</body>
+</html>

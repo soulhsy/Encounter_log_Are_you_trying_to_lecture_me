@@ -1,0 +1,435 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #222;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Pretendard", sans-serif;
+  line-height: 1.8;
+}
+
+main {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+
+/* =================================
+   01. INTRO / PROMPT
+================================= */
+
+#intro {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 36px 0;
+}
+
+#intro > .muted,
+#intro > h1 {
+  text-align: center;
+}
+
+#intro h1 {
+  margin: 12px 0;
+}
+
+#intro > p {
+  text-align: center;
+  margin: 12px 0 0;
+}
+
+#intro .prompt-area {
+  width: 100%;
+  margin: 32px 0 0;
+}
+
+/* 질문을 전송하면 중앙 정렬을 해제하고 답변이 바로 이어짐 */
+#intro.started {
+  min-height: auto;
+  justify-content: flex-start;
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+
+.prompt-area {
+  margin: 50px 0 90px;
+}
+
+.prompt-box {
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 24px;
+  padding: 18px 18px 12px;
+  background: #fff;
+  box-shadow: 0 4px 24px #0000000a;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.prompt-box:focus-within {
+  border-color: #b8b8b8;
+  box-shadow: 0 5px 28px #00000012;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 72px;
+  max-height: 30vh;
+  border: none;
+  outline: none;
+  resize: none;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.7;
+  background: transparent;
+}
+
+.send-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+/* =================================
+   02. TEXT / HEADINGS
+================================= */
+
+h1 {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h2 {
+  font-size: 23px;
+  margin-top: 90px;
+  line-height: 1.5;
+}
+
+p {
+  font-size: 17px;
+  line-height: 2.1;
+  margin: 28px 0;
+}
+
+.muted {
+  font-size: 13px;
+  color: #999;
+}
+
+
+/* =================================
+   03. BUTTONS
+================================= */
+
+button {
+  border: none;
+  border-radius: 22px;
+  background: #222;
+  color: white;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 9px 17px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: .75;
+}
+
+button:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+
+/* =================================
+   04. FIRST AI ANSWER
+================================= */
+
+#firstAnswer {
+  margin-top: 24px;
+  padding-bottom: 20px;
+}
+
+.ai-label {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+/* 첫 번째 AI 답변: 박스 없이 텍스트만 표시 */
+#firstAnswer .ai-message {
+  position: relative;
+
+  height: 36svh;
+  min-height: 190px;
+  max-height: 320px;
+
+  overflow: hidden;
+
+  /* 박스 디자인 제거 */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+
+  padding: 0;
+  margin: 20px 0;
+
+  white-space: pre-line;
+  line-height: 1.8;
+}
+
+/* 첫 번째 AI 답변 아래쪽 페이드 효과 */
+#firstAnswer .ai-message::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 38%;
+
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.78) 55%,
+    #fff 100%
+  );
+
+  opacity: 0;
+  transition: opacity 1.5s ease;
+
+  pointer-events: none;
+}
+
+/* 답변 도중 에세이가 등장할 때 페이드 시작 */
+#firstAnswer .ai-message.transitioning::after {
+  opacity: 1;
+}
+
+
+/* =================================
+   05. ESSAY
+================================= */
+
+.essay {
+  padding-top: 40px;
+  display: none;
+}
+
+.essay.visible {
+  display: block;
+  animation: essayReveal 1.8s ease both;
+}
+
+@keyframes essayReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.essay-section {
+  padding: 15px 0;
+}
+
+.interactive-link {
+  color: #777;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+/* =================================
+   06. DRAG AREA / END
+================================= */
+
+.drag-area {
+  background: #f3f3f3;
+  padding: 40px 20px;
+  text-align: center;
+  margin: 60px 0;
+  cursor: grab;
+  user-select: none;
+  border-radius: 12px;
+}
+
+.drag-area:active {
+  cursor: grabbing;
+}
+
+.end-area {
+  margin-top: 120px;
+  padding: 50px 0;
+  border-top: 1px solid #eee;
+}
+
+
+/* =================================
+   07. LIVE LOG PANEL
+================================= */
+
+#log-panel {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 20;
+  background: #222;
+  color: white;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 11px;
+  line-height: 1.7;
+  display: none;
+  min-width: 150px;
+}
+
+
+/* =================================
+   08. RESPONSIVE
+================================= */
+
+@media (max-width: 600px) {
+
+  main {
+    padding: 0 20px;
+  }
+
+  #intro {
+    padding: 28px 0;
+  }
+
+  #intro.started {
+    padding-top: 24px;
+    padding-bottom: 12px;
+  }
+
+  #intro h1 {
+    font-size: clamp(22px, 6vw, 27px);
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  .prompt-box {
+    border-radius: 22px;
+    padding: 15px 15px 10px;
+  }
+
+  textarea {
+    min-height: 76px;
+    font-size: 16px;
+  }
+
+  #firstAnswer {
+    margin-top: 16px;
+  }
+
+  #firstAnswer .ai-message {
+    height: 36svh;
+    min-height: 180px;
+  }
+}
+
+@media (min-width: 900px) {
+
+  #intro .prompt-area {
+    margin-top: 38px;
+  }
+
+  .prompt-box {
+    padding: 20px 20px 13px;
+  }
+}
+
+#essay .muted,
+#essay h1,
+#essay h2 {
+  display: none;
+}
+
+/* 에세이 시작 부분의 여백 */
+#essay {
+  padding-top: 300px;
+}
+
+/* 각 에세이 섹션 사이 간격 */
+.essay-section {
+  margin-bottom: 140px;
+}
+
+/* 각 섹션 내부 문단 사이 간격 */
+.essay-section p {
+  margin-bottom: 140px;
+}
+
+/* 각 섹션의 마지막 문단은 추가 여백 제거 */
+.essay-section p:last-child {
+  margin-bottom: 0;
+}
+
+/* 마지막 AI 답변 */
+#finalAiMessage {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 20px 0 60px;
+  white-space: pre-line;
+  line-height: 1.8;
+}
+
+/* 마지막 입력 영역 */
+#finalInputArea {
+  margin-top: 80px;
+  padding-bottom: 100px;
+}
+
+/* 관객 입력창
+#finalPrompt {
+  display: block;
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 0;
+
+  border: none;
+  border-bottom: 1px solid #999;
+  border-radius: 0;
+
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.8;
+
+  resize: none;
+} */
+
+/* 입력창에 포커스가 있을 때 */
+#finalPrompt:focus {
+  border-bottom: 1px solid #000;
+}
