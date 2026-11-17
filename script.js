@@ -21,40 +21,113 @@ let finalResponseStartTime = null;
 // EPSON PRINTER
 // =================================
 
-let printer = null;
-let ePosDev = new epson.ePOSDevice();
+const PRINTER_IP = "192.168.0.2";
 
-function connectPrinter() {
-  ePosDev.connect("192.168.0.2", 19100, function(data) {
-    if (data === "OK") {
-      ePosDev.createDevice(
-        "local_printer",
-        ePosDev.DEVICE_TYPE_PRINTER,
-        {
-          crypto: true,
-          buffer: false
-        },
-        function(devobj, retcode) {
-          if (retcode === "OK") {
-            printer = devobj;
-            console.log("Printer connected");
-          } else {
-            console.log("Printer device error:", retcode);
-          }
-        }
-      );
-    } else {
+// ePOS-Device 는 8008(http) / 8043(https) 만 받는다.
+// https 페이지(GitHub Pages 등)에서는 mixed content 차단 때문에 8043 을 써야 한다.
+const PRINTER_PORT = window.location.protocol === "https:" ? 8043 : 8008;
+
+const PRINTER_RETRY_MS = 5000;
+
+let printer = null;
+let printerConnecting = false;
+let printerRetryTimer = null;
+let printerWaiters = [];
+
+const ePosDev = new epson.ePOSDevice();
+
+// 연결이 끊기면 printer 를 비워서 다음 인쇄 때 다시 연결하게 한다.
+ePosDev.onreconnecting = () => console.log("Printer reconnecting...");
+ePosDev.onreconnect = () => console.log("Printer reconnected");
+ePosDev.ondisconnect = () => {
+  console.log("Printer disconnected");
+  printer = null;
+  schedulePrinterRetry();
+};
+
+function settlePrinterWaiters(error) {
+  const waiters = printerWaiters;
+  printerWaiters = [];
+  waiters.forEach(cb => cb(error ? null : printer, error));
+}
+
+function schedulePrinterRetry() {
+  if (printerRetryTimer || finished) return;
+  printerRetryTimer = setTimeout(() => {
+    printerRetryTimer = null;
+    if (!printer) connectPrinter();
+  }, PRINTER_RETRY_MS);
+}
+
+// callback(printer, error) — 연결되면 printer, 실패하면 error 문자열
+function connectPrinter(callback) {
+
+  if (printer) {
+    if (callback) callback(printer, null);
+    return;
+  }
+
+  if (callback) printerWaiters.push(callback);
+  if (printerConnecting) return;
+
+  printerConnecting = true;
+  clearTimeout(printerRetryTimer);
+  printerRetryTimer = null;
+
+  console.log("Printer connecting to " + PRINTER_IP + ":" + PRINTER_PORT);
+
+  ePosDev.connect(PRINTER_IP, PRINTER_PORT, function(data) {
+
+    // https(8043) 연결 성공 시에는 "SSL_CONNECT_OK" 가 온다.
+    if (data !== "OK" && data !== "SSL_CONNECT_OK") {
+      printerConnecting = false;
       console.log("Printer connection error:", data);
+      settlePrinterWaiters("CONNECT_" + data);
+      schedulePrinterRetry();
+      return;
     }
+
+    ePosDev.createDevice(
+      "local_printer",
+      ePosDev.DEVICE_TYPE_PRINTER,
+      {
+        crypto: true,
+        buffer: false
+      },
+      function(devobj, retcode) {
+        printerConnecting = false;
+
+        if (retcode === "OK") {
+          printer = devobj;
+          printer.timeout = 60000;
+          console.log("Printer connected");
+          settlePrinterWaiters(null);
+        } else {
+          console.log("Printer device error:", retcode);
+          settlePrinterWaiters("DEVICE_" + retcode);
+          schedulePrinterRetry();
+        }
+      }
+    );
   });
 }
 
+// 페이지를 열 때 미리 연결해 둔다. 실패하면 PRINTER_RETRY_MS 간격으로 재시도.
 connectPrinter();
-function printJudgments(judgments, result) {
-  if (!printer) {
-    console.log("Printer is not connected");
-    return;
-  }
+
+// onDone(success, code) — 인쇄 결과를 알려 준다.
+function printJudgments(judgments, result, onDone = () => {}) {
+
+  connectPrinter((connectedPrinter, error) => {
+    if (error) {
+      onDone(false, error);
+      return;
+    }
+    buildAndSendReceipt(connectedPrinter, judgments, result, onDone);
+  });
+}
+
+function buildAndSendReceipt(printer, judgments, result, onDone) {
 
   // 이벤트 유형별 집계
   const countEvents = type =>
@@ -133,6 +206,18 @@ function printJudgments(judgments, result) {
   printer.addText("END OF RECORD\n\n\n");
 
   printer.addCut(printer.CUT_FEED);
+
+  // 인쇄 결과 콜백 (용지 없음, 커버 열림, 타임아웃 등)
+  printer.onreceive = res => {
+    console.log("Print result:", res.success, res.code, "status:", res.status);
+    onDone(res.success, res.code);
+  };
+
+  printer.onerror = err => {
+    console.log("Print error:", err.status, err.responseText);
+    onDone(false, "ERROR_" + err.status);
+  };
+
   printer.send();
 }
 
@@ -574,10 +659,14 @@ const result = {
   // exportLog(result);
 
   // 판정문 영수증 출력
-  printJudgments(judgments, result);
-  
-  document.getElementById("log-panel").innerHTML =
-    "■ RECORDING ENDED<br>LOG EXPORTED";
+  const logPanel = document.getElementById("log-panel");
+  logPanel.innerHTML = "■ RECORDING ENDED<br>PRINTING...";
+
+  printJudgments(judgments, result, (success, code) => {
+    logPanel.innerHTML = success
+      ? "■ RECORDING ENDED<br>PRINTED"
+      : "■ RECORDING ENDED<br>PRINT FAILED : " + code;
+  });
 
 }
 
